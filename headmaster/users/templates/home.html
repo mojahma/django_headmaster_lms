@@ -1,0 +1,50 @@
+<!-- home.html -->
+{% extends "base.html" %}
+
+{% block title %}Home - Headmaster Project{% endblock %}
+
+{% block content %}
+  <style>
+    @keyframes slideRightToLeft {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    #color-changing-heading {
+      font-size: 50px;
+      color: orange;
+      -webkit-text-stroke: 1px black; 
+      cursor: pointer;
+      animation: slideRightToLeft 8s ease-in-out infinite alternate;
+    }
+  </style>
+
+  <h1 id="color-changing-heading">Igniting Passions, Inspiring Achievements</h1>
+
+  <script>
+    // Function to generate a random color
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Function to change the color of the heading and initiate slide animation
+    function changeHeadingColorAndSlide() {
+      var heading = document.getElementById("color-changing-heading");
+      heading.style.color = getRandomColor(); // Set random color
+    }
+
+    // Change heading color and slide animation every 3 seconds (3000 milliseconds)
+    setInterval(changeHeadingColorAndSlide, 3000);
+  </script>
+{% endblock %}

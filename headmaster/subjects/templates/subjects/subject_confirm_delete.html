@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Subject{% endblock %}
+
+{% block content %}
+    <h2>Delete Subject</h2>
+
+    <p>Are you sure you want to delete '{{ subject.name }}'? This action cannot be undone.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+        <a href="{% url 'subject_list' %}">Cancel</a>
+    </form>
+{% endblock %}

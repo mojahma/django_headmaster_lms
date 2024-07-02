@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="login-form">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: ;
+  }
+
+  .login-form {
+    width: 500px;
+    padding: 50px;
+    border: 5px solid black;
+    border-radius: 10px;
+    background-color: #E2E1E1;
+    transform: translateY(-200px);
+  }
+
+  .login-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: black; 
+    border-bottom: 2px solid black; 
+    padding-bottom: 5px; 
+  }
+
+  .login-form form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-form form .btn {
+    margin-top: 10px;
+    width: 70%;
+  }
+
+  /* Style for text color */
+  .login-form label,
+  .login-form input {
+    color: black;
+  }
+
+  /* Adjust input width */
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+  }
+</style>
+{% endblock %}

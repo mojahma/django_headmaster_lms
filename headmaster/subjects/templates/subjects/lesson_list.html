@@ -1,0 +1,25 @@
+{% load static %}
+{% extends 'base.html' %}
+
+{% block title %}Available Lessons{% endblock %}
+
+{% block content %}
+    <h2>Available Lessons</h2>
+    <div class="lesson-container">
+        {% for lesson in lessons %}
+            <div class="lesson-card">
+                <h3>{{ lesson.title }}</h3>
+                <p>{{ lesson.content }}</p>
+                <a href="{% url 'subject_detail' lesson.subject.id %}">Subject: {{ lesson.subject.name }}</a>
+                {% if user.is_authenticated and user.is_staff %}
+                    <div class="actions">
+                        <a href="{% url 'lesson_update' lesson.subject.id lesson.id %}">Edit Lesson</a>
+                        <a href="{% url 'lesson_delete' lesson.subject.id lesson.id %}">Delete Lesson</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No lessons available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

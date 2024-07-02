@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ subject.name }} {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3, h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .subject-card {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%; /* Ensure full width within the container */
+    }
+
+    .lesson-content {
+        font-size: 1.2em;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .lesson-content p {
+        margin-bottom: 20px;
+    }
+
+    .lesson-content ul, .lesson-content ol {
+        margin-bottom: 20px;
+        padding-left: 20px;
+    }
+
+    .lesson-content ul li, .lesson-content ol li {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2>{{ subject.name }} Details</h2>
+    <p>{{ subject.description }}</p>
+    <a href="{% url 'subject_list' %}" class="btn btn-secondary mb-3">Back to Subjects</a>
+    <hr>
+
+    <h3>Lessons</h3>
+    {% for lesson in lessons %}
+        <div class="subject-card mb-3">
+            <h4>{{ lesson.title|default:"No Title" }}</h4>
+            <div class="lesson-content">
+                {{ lesson.content|safe }}
+            </div>
+            
+            {% if lesson.quiz %}
+                {% if user.is_authenticated %}
+                    {% if lesson.quiz_completed %}
+                        <p>You have completed the quiz for this lesson.</p>
+                    {% else %}
+                        <a href="{% url 'take_quiz' lesson.id %}" class="btn btn-primary">Take Quiz</a>
+                    {% endif %}
+                {% else %}
+                    <p><a href="{% url 'login' %}?next={% url 'take_quiz' lesson.id %}" class="btn btn-primary">Log in to take the quiz</a></p>
+                {% endif %}
+            {% endif %}
+            
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'lesson_update' subject.id lesson.id %}" class="btn btn-warning">Edit Lesson</a>
+                <a href="{% url 'lesson_delete' subject.id lesson.id %}" class="btn btn-danger">Delete Lesson</a>
+            {% endif %}
+        </div>
+        <hr>
+    {% empty %}
+        <p>No lessons found for this subject.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'lesson_create' subject.id %}" class="btn btn-success">Add New Lesson</a>
+    {% endif %}
+</div>
+{% endblock %}

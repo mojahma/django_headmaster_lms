@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Staff List - Headmaster Project{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="underline-heading-container">
+        <h1 class="underline-heading">Our Faculty</h1>
+    </div>
+    <div class="row">
+        {% for staff in staff_members %}
+            <div class="col-md-4 mb-4">
+                <div class="staff-info">
+                    <div class="rectangle-box">
+                        <div class="staff-details">
+                            <p>Username: {{ staff.user.username }}</p>
+                            <p>Position: {{ staff.position }}</p>
+                            <p>Hire Date: {{ staff.hire_date }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .underline-heading-container {
+        width: 100%;
+        margin: auto;
+        text-align: center;
+    }
+
+    .underline-heading {
+        color: orange;
+        position: relative;
+        margin-bottom: 20px; /* Space between heading and rectangles */
+    }
+
+    .underline-heading::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 80%; /* Ensure the underline spans the entire width */
+        height: 2px; /* Adjust the height of the underline */
+        background-color: orange;
+        transform: translateX(-50%);
+    }
+
+    .rectangle-box {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: white;
+        color: black;
+    }
+
+    .staff-details {
+        text-align: center;
+    }
+</style>
+{% endblock %}

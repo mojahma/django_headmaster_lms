@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<!-- Red Header Section -->
+<div class="red-header bg-danger text-white py-3">
+    <div class="container">
+        <h3>Admin Dashboard</h3>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2>Welcome, {{ user.get_full_name }}</h2>
+    <p>This is your admin dashboard.</p>
+
+    <!-- Add Subjects Button -->
+    <a href="{% url 'subject_list' %}" class="btn btn-primary">View Subjects</a>
+</div>
+{% endblock %}
+
+<style>
+    .red-header {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        margin-top: 0; 
+    }
+    
+    .red-header h3 {
+        margin: 0;
+        padding: 10px 0;
+    }
+</style>

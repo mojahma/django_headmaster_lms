@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Available Subjects{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS Styles */
+    .subject-container {
+        display: flex;
+        flex-wrap: wrap; /* Allow subjects to wrap to the next line */
+        gap: 20px; /* Adjust the gap between subject cards */
+        justify-content: flex-start; /* Start from left to right */
+    }
+
+    .subject-card {
+        width: calc(31.25% - 20px); 
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box; 
+    }
+
+    .subject-card img {
+        max-width: 100%; 
+        border-radius: 5px; 
+    }
+
+    .subject-card h3 {
+        margin-top: 10px;
+    }
+
+    .actions {
+        margin-top: 10px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-subject-btn {
+        background-color: darkorange;
+        color: black;
+        padding: 20px 180px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    /* Additional styling as needed */
+</style>
+
+<div class="header">
+    <a href="{% url 'home' %}">Home</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}">Profile</a>
+    {% endif %}
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'subject_create' %}" class="add-subject-btn">Add New Subject</a>
+    {% endif %}
+</div>
+
+<h2>Our Curriculum</h2>
+
+<div class="subject-container">
+    {% for subject in subjects|dictsort:"name" %}
+        <div class="subject-card">
+            <img src="{{ subject.image.url }}" alt="{{ subject.name }}">
+            <h3>{{ subject.name }}</h3>
+            <p>{{ subject.description }}</p>
+            <a href="{% url 'subject_detail' subject.id %}">View Details</a>
+            {% if user.is_authenticated and user.is_staff %}
+                <div class="actions">
+                    <a href="{% url 'subject_update' subject.id %}">Edit</a>
+                    <a href="{% url 'subject_delete' subject.id %}">Delete</a>
+                    <a href="{% url 'lesson_create' subject.id %}">Add New Lesson</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<h2>Student Profile</h2>
+<p>Welcome, {{ user.username }}!</p>
+
+<!-- Include the subjects tab content -->
+<div>
+    <h3>Subjects</h3>
+    <ul>
+        {% for subject in subjects %}
+            <li>{{ subject.name }}</li>
+        {% empty %}
+            <li>No subjects found.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

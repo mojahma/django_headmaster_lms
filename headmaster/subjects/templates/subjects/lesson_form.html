@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lesson Form - Headmaster Project
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary btn-back-to-previous">Back to Previous</a>
+        <h2 style="color: orange;">Create Lesson</h2>
+        <form method="post" enctype="multipart/form-data" style="width: 70%;"> 
+            {% csrf_token %}
+            <div style="font-size: 1.2rem; color: yellow; display: flex; flex-direction: column;"> 
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary" style="color: black;">Save Lesson</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        .btn-back-to-previous {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: silver;
+            color: black; 
+            border: none;
+        }
+        form div {
+            display: flex;
+            flex-direction: column;
+        }
+        form div label {
+            color: black; 
+        }
+    </style>
+{% endblock %}

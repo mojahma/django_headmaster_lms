@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        Update Subject
+    {% else %}
+        Create Subject
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS Styles for Form */
+    h2 {
+        color: orange;
+        margin-bottom: 20px;
+    }
+
+    form {
+        width: 50%;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: black; 
+    }
+
+    form input[type="text"],
+    form textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-size: 1rem;
+        color: black; 
+    }
+
+    form button {
+        background-color: darkorange;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    form button:hover {
+        background-color: orange;
+        color: white;
+    }
+
+    .back-link {
+        display: block;
+        margin-top: 10px;
+        color: blue;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h2 style="text-decoration: underline;">
+    {% if form.instance.pk %}
+        Update Subject
+    {% else %}
+        Create Subject
+    {% endif %}
+</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<a href="{% url 'subject_list' %}" class="back-link">Back to Subject List</a>
+{% endblock %}
